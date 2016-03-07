@@ -5,6 +5,7 @@ import html2text
 import re
 import sys
 import getopt
+import textmining
 
 
 def output_time(text, time):
@@ -60,6 +61,17 @@ def feature_extraction(texts, metatexts):
         vector.append(len(re.findall('！', texts[i])) / V1)
         vector.append(len(re.findall(r'[wｗ]', texts[i])) / V1)
         vector.append(int("green" in metatexts[i]))
+        textdata = textmining.text_to_array_ja(texts[i], ["助動詞"])
+        vector.append(int("だろ" in textdata))
+        vector.append(int("だ" in textdata))
+        vector.append(int("です" in textdata))
+        vector.append(int("ます" in textdata))
+        vector.append(int("やろ" in textdata))
+        vector.append(int("や" in textdata))
+        vector.append(int("でしょ" in textdata))
+        vector.append(int("な" in textdata))
+        vector.append(int("だろ" in textdata))
+        vector.append(int("た" in textdata))
         timedata = re.findall(r'[0-9]{4}-[0-9]{2}-[0-9]{2}',
                               metatexts[i]).pop()
         timedata += ' '
